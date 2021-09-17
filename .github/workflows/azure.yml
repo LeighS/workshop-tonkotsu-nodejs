@@ -21,7 +21,6 @@ on:
     
     
 env:
-  AZURE_WEBAPP_NAME: tonkotsu-ark1.azurewebsites.net    # set this to your application's name
   AZURE_WEBAPP_PACKAGE_PATH: '.'      # set this to the path to your web app project, defaults to the repository root
   NODE_VERSION: '16.x'                # set this to the node version to use
 
@@ -48,6 +47,8 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     environment: staging
+    env:
+      AZURE_WEBAPP_NAME: tonkotsu-ark1-staging.azurewebsites.net    # set this to your application's name
     steps:
     - name: 'Deploy to Azure WebApp'
       uses: azure/webapps-deploy@v2
@@ -61,6 +62,8 @@ jobs:
     needs: staging
     runs-on: ubuntu-latest
     environment: production
+    env:
+      AZURE_WEBAPP_NAME: tonkotsu-ark1.azurewebsites.net    # set this to your application's name    
     steps:
     - name: 'Deploy to Azure WebApp'
       uses: azure/webapps-deploy@v2
