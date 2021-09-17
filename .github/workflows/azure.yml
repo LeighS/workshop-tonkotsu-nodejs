@@ -23,11 +23,13 @@ on:
 env:
   AZURE_WEBAPP_PACKAGE_PATH: '.'      # set this to the path to your web app project, defaults to the repository root
   NODE_VERSION: '16.x'                # set this to the node version to use
+  AZURE_WEBAPP_NAME: tonkotsu-ark1    # set this to your application's name  
 
 jobs:
   build:
     name: Build and Deploy
     runs-on: ubuntu-latest
+    environment: staging
     steps:
     - uses: actions/checkout@v2
     - name: Use Node.js ${{ env.NODE_VERSION }}
@@ -41,15 +43,6 @@ jobs:
         npm install
         npm run build --if-present
         npm run test --if-present
-
-  staging:
-    name: Deploy to Staging
-    needs: build
-    runs-on: ubuntu-latest
-    environment: staging
-    env:
-      AZURE_WEBAPP_NAME: tonkotsu-ark1    # set this to your application's name
-    steps:
     - name: 'Deploy to Azure WebApp'
       uses: azure/webapps-deploy@v2
       with:
@@ -57,19 +50,4 @@ jobs:
         publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
         package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
         slot-name: 'staging'
-        
-  production:
-    name: Deploy to Production
-    needs: staging
-    runs-on: ubuntu-latest
-    environment: production
-    env:
-      AZURE_WEBAPP_NAME: tonkotsu-ark1    # set this to your application's name    
-    steps:
-    - name: 'Deploy to Azure WebApp'
-      uses: azure/webapps-deploy@v2
-      with:
-        app-name: ${{ env.AZURE_WEBAPP_NAME }}
-        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-        package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}        
         
