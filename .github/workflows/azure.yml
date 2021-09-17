@@ -48,7 +48,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: staging
     env:
-      AZURE_WEBAPP_NAME: tonkotsu-ark1-staging.azurewebsites.net    # set this to your application's name
+      AZURE_WEBAPP_NAME: tonkotsu-ark1-staging    # set this to your application's name
     steps:
     - name: 'Deploy to Azure WebApp'
       uses: azure/webapps-deploy@v2
@@ -63,7 +63,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
     env:
-      AZURE_WEBAPP_NAME: tonkotsu-ark1.azurewebsites.net    # set this to your application's name    
+      AZURE_WEBAPP_NAME: tonkotsu-ark1    # set this to your application's name    
     steps:
     - name: 'Deploy to Azure WebApp'
       uses: azure/webapps-deploy@v2
